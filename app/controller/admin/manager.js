@@ -5,6 +5,7 @@ const Controller = require('egg').Controller;
 class ManagerController extends Controller {
   async index() {
     const {ctx} = this;
+    ctx.session.username = '小马大哥哥';
     await ctx.render("admin/manager/index");
   }
   async edit() {
@@ -16,7 +17,9 @@ class ManagerController extends Controller {
     await ctx.render("admin/manager/edit");
   }
   async delete() {
-    this.ctx.body = '删除管理员';
+    const {ctx} = this;
+    ctx.body = ctx.session.username;
+    // this.ctx.body = '删除管理员';
   }
 }
 
