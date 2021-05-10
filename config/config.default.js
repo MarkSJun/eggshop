@@ -30,7 +30,10 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1576384476895_3620';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = ['adminAuth'];
+  config.adminAuth = {
+    match: '/admin',
+  }
 
   // add your user config here
   const userConfig = {

@@ -23,6 +23,8 @@ module.exports = app => {
   router.get('/admin/access/delete', controller.admin.access.delete);
 
   router.get('/admin/login', controller.admin.login.index);
+  router.get('/admin/login/captcha', controller.admin.login.captcha);
+  router.post('/admin/doLogin', controller.admin.login.doLogin);
   router.get('/admin', controller.admin.main.index);
   router.get('/admin/welcome', controller.admin.main.welcome);
 };
