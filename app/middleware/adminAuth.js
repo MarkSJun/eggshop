@@ -4,7 +4,7 @@ module.exports = option => {
         console.log(ctx.session.userinfo);
         // 配置csrf全局变量
         ctx.state.csrf=ctx.csrf;
-        if (ctx.session.userinfo) {
+        if (ctx.session.userinfo && ctx.session.userinfo.username) {
             await next();
         } else {
             if (pathname == '/admin/login' || pathname == '/admin/doLogin' || pathname == '/admin/login/captcha') {
