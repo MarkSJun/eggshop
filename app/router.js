@@ -4,27 +4,28 @@
  * @param {Egg.Application} app - egg application
  */
 module.exports = app => {
-  const { router, controller, config: { apiPrefix } } = app;
+  const { router, controller, config } = app;
   router.get('/', controller.default.home.index);
 
-  router.get('/admin/manager', controller.admin.manager.index);
-  router.get('/admin/manager/add', controller.admin.manager.add);
-  router.get('/admin/manager/edit', controller.admin.manager.edit);
-  router.get('/admin/manager/delete', controller.admin.manager.delete);
+  router.get(`${config.adminPath}/manager`, controller.admin.manager.index);
+  router.get(`${config.adminPath}/manager/add`, controller.admin.manager.add);
+  router.get(`${config.adminPath}/manager/edit`, controller.admin.manager.edit);
+  router.get(`${config.adminPath}/manager/delete`, controller.admin.manager.delete);
 
-  router.get('/admin/role', controller.admin.role.index);
-  router.get('/admin/role/add', controller.admin.role.add);
-  router.get('/admin/role/edit', controller.admin.role.edit);
-  router.get('/admin/role/delete', controller.admin.role.delete);
+  router.get(`${config.adminPath}/role`, controller.admin.role.index);
+  router.get(`${config.adminPath}/role/add`, controller.admin.role.add);
+  router.get(`${config.adminPath}/role/edit`, controller.admin.role.edit);
+  router.get(`${config.adminPath}/role/delete`, controller.admin.role.delete);
 
-  router.get('/admin/access', controller.admin.access.index);
-  router.get('/admin/access/add', controller.admin.access.add);
-  router.get('/admin/access/edit', controller.admin.access.edit);
-  router.get('/admin/access/delete', controller.admin.access.delete);
+  router.get(`${config.adminPath}/access`, controller.admin.access.index);
+  router.get(`${config.adminPath}/access/add`, controller.admin.access.add);
+  router.get(`${config.adminPath}/access/edit`, controller.admin.access.edit);
+  router.get(`${config.adminPath}/access/delete`, controller.admin.access.delete);
 
-  router.get('/admin/login', controller.admin.login.index);
-  router.get('/admin/login/captcha', controller.admin.login.captcha);
-  router.post('/admin/doLogin', controller.admin.login.doLogin);
-  router.get('/admin', controller.admin.main.index);
-  router.get('/admin/welcome', controller.admin.main.welcome);
+  router.get(`${config.adminPath}/login`, controller.admin.login.index);
+  router.get(`${config.adminPath}/login/loginOut`, controller.admin.login.loginOut);
+  router.get(`${config.adminPath}/login/captcha`, controller.admin.login.captcha);
+  router.post(`${config.adminPath}/doLogin`, controller.admin.login.doLogin);
+  router.get(`${config.adminPath}`, controller.admin.main.index);
+  router.get(`${config.adminPath}/welcome`, controller.admin.main.welcome);
 };

@@ -28,11 +28,14 @@ module.exports = appInfo => {
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1576384476895_3620';
+  // 配置后台地址
+  config.adminPath = '/admin'
 
   // add your middleware config here
   config.middleware = ['adminAuth'];
   config.adminAuth = {
-    match: '/admin',
+    match: config.adminPath,
+    adminPath: config.adminPath
   }
 
   // add your user config here

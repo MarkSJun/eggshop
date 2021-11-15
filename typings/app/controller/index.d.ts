@@ -3,6 +3,7 @@
 
 import 'egg';
 import ExportAdminAccess = require('../../../app/controller/admin/access');
+import ExportAdminBase = require('../../../app/controller/admin/base');
 import ExportAdminLogin = require('../../../app/controller/admin/login');
 import ExportAdminMain = require('../../../app/controller/admin/main');
 import ExportAdminManager = require('../../../app/controller/admin/manager');
@@ -13,6 +14,7 @@ declare module 'egg' {
   interface IController {
     admin: {
       access: ExportAdminAccess;
+      base: ExportAdminBase;
       login: ExportAdminLogin;
       main: ExportAdminMain;
       manager: ExportAdminManager;
