@@ -16,11 +16,13 @@ module.exports = app => {
   router.get(`${config.adminPath}/role/add`, controller.admin.role.add);
   router.get(`${config.adminPath}/role/edit`, controller.admin.role.edit);
   router.get(`${config.adminPath}/role/delete`, controller.admin.role.delete);
+  router.post(`${config.adminPath}/role/doAdd`, controller.admin.role.doAdd);
 
   router.get(`${config.adminPath}/access`, controller.admin.access.index);
   router.get(`${config.adminPath}/access/add`, controller.admin.access.add);
   router.get(`${config.adminPath}/access/edit`, controller.admin.access.edit);
   router.get(`${config.adminPath}/access/delete`, controller.admin.access.delete);
+
 
   router.get(`${config.adminPath}/login`, controller.admin.login.index);
   router.get(`${config.adminPath}/login/loginOut`, controller.admin.login.loginOut);

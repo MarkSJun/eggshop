@@ -3,9 +3,11 @@
 
 import 'egg';
 import ExportAdmin = require('../../../app/model/admin');
+import ExportRole = require('../../../app/model/role');
 
 declare module 'egg' {
   interface IModel {
     Admin: ReturnType<typeof ExportAdmin>;
+    Role: ReturnType<typeof ExportRole>;
   }
 }

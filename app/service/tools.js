@@ -19,6 +19,10 @@ class ToolsService extends Service {
   md5(msg){
     return md5(msg)
   };
+  getUnixTime() {
+    let dateObj = new Date();
+    return dateObj.getTime()/1000;
+  }
 }
 
 module.exports = ToolsService;
