@@ -5,14 +5,38 @@ class RoleController extends BaseController {
     async index() {
         const {ctx} = this;
         let res = await ctx.model.Role.findAll();
-        console.log('list', res);
+        // console.log('list', res);
         await ctx.render("admin/role/index", {
           list: res
         });
       }
       async edit() {
-        const {ctx} = this;
-        await ctx.render("admin/role/index");
+        
+        try {
+          const {ctx} = this;
+          let id = ctx.request.query.id;
+          let res = await ctx.model.Role.findAll({
+            where: {
+              id: id
+            }
+          })
+          let itemData = res[0];
+          await ctx.render(`${this.config.adminPath}/role/edit`, {list:itemData});
+        } catch(error) {
+          await this.error("非法请求",`${this.config.adminPath}/role`);
+        }
+        
+      }
+      async doEdit() {
+        let id = this.ctx.request.body.id;
+        let role = await this.ctx.model.Role.findByPk(id);
+ 
+        if(!role) {
+          await this.error("非法请求",`${this.config.adminPath}/role/edit?id=${id}`);
+          return;
+        } 
+        await role.update(this.ctx.request.body);
+        await this.success("修改数据成功",`${this.config.adminPath}/role`);
       }
       async add() {
         const {ctx} = this;
@@ -37,17 +61,27 @@ class RoleController extends BaseController {
             addTime: ctx.service.tools.getUnixTime()
           }))
      
-          await this.success("新增角色成功", `${this.config.adminPath}/role/add`)
+          await this.success("新增角色成功", `${this.config.adminPath}/role`)
         } else {
           await this.error("角色名称不能为空", `${this.config.adminPath}/role/add`)
         }
     
       }
       async delete() {
-        const {ctx} = this;
-        this.ctx.body = '删除角色';
+        try {
+          const {ctx} = this;
+          let id = ctx.request.query.id;
+          let role = await ctx.model.Role.findByPk(id);
+          if (!role) {
+            await this.error("非法请求",`${this.config.adminPath}/role/`);
+            return;
+          }
+          await role.destroy();
+          await this.success("删除数据成功",`${this.config.adminPath}/role`);
+        } catch(err) {
+          await this.error("非法请求",`${this.config.adminPath}/role`);
+        }
 
-        // await ctx.render("admin/role/index");
       }
 }
 

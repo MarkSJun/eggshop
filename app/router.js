@@ -15,6 +15,7 @@ module.exports = app => {
   router.get(`${config.adminPath}/role`, controller.admin.role.index);
   router.get(`${config.adminPath}/role/add`, controller.admin.role.add);
   router.get(`${config.adminPath}/role/edit`, controller.admin.role.edit);
+  router.post(`${config.adminPath}/role/doEdit`, controller.admin.role.doEdit);
   router.get(`${config.adminPath}/role/delete`, controller.admin.role.delete);
   router.post(`${config.adminPath}/role/doAdd`, controller.admin.role.doAdd);
 
