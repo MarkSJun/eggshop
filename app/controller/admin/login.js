@@ -9,25 +9,25 @@ class LoginController extends BaseController {
   }
   async doLogin() {
     const { ctx } = this;
-    console.log('用户登录信息：', ctx.request.body);
+    // console.log('用户登录信息：', ctx.request.body);
     
-    let username=this.ctx.request.body.username;
-    let password=this.ctx.service.tools.md5(this.ctx.request.body.password);
-    let verify=this.ctx.request.body.verify.toLowerCase();
+    let username=ctx.request.body.username;
+    let password=ctx.service.tools.md5(ctx.request.body.password);
+    let verify=ctx.request.body.verify.toLowerCase();
     //1、获取表单穿过来的数据 判断验证码是否正确
     //2、判断用户名密码是否合法
     //3、执行登录
-    if(verify==this.ctx.session.code){
-      let userinfo=await this.ctx.model.Admin.findAll({
+    if(verify==ctx.session.code){
+      let userinfo=await ctx.model.Admin.findAll({
         where: {
           username: username,
           password:password
         }
       });
-      console.log('登录成功用户的数据：', userinfo);
+      // console.log('登录成功用户的数据：', userinfo);
       if(userinfo.length>0){
-        this.ctx.session.userinfo=userinfo[0];
-        // this.ctx.redirect(`${this.config.adminPath}`)
+        ctx.session.userinfo=userinfo[0];
+        // ctx.redirect(`${this.config.adminPath}`)
         await this.success("登录成功", `${this.config.adminPath}`)
       }else{
         // console.log("用户名或者密码错误");

@@ -73,7 +73,7 @@ class RoleController extends BaseController {
           let id = ctx.request.query.id;
           let role = await ctx.model.Role.findByPk(id);
           if (!role) {
-            await this.error("非法请求",`${this.config.adminPath}/role/`);
+            await this.error("非法请求",`${this.config.adminPath}/role`);
             return;
           }
           await role.destroy();

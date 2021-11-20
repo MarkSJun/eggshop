@@ -24,9 +24,9 @@
         <table class="table table-bordered">
             <thead>
                 <tr class="th">
-                    <th>角色名称</th>
+                    <th style="width: 200px;">角色名称</th>
                     <th>角色描述</th>
-                    <th>创建时间</th>
+                    <th style="width: 150px;">创建时间</th>
                     <th class="text-center">操作</th>
                 </tr>
             </thead>
@@ -35,7 +35,7 @@
                 <tr>
                     <td><%=list[i].rolename%></td>
                     <td><%=list[i].description%></td>
-                    <td><%=list[i].addTime%></td>
+                    <td class="text-center"><%=list[i].addTime%></td>
 
                     <td class="text-center">
                        <a href="<%=adminPath%>/role/edit?id=<%=list[i].id%>">修改</a>  

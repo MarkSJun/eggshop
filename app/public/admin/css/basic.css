@@ -61,6 +61,17 @@ table .th{
 	background: #EEEEEE;
 }
 
+table th {
+    text-align: center;
+}
+
+.tcenter {
+    text-align: center;
+}
+.tleft {
+    text-align: left;
+}
+
  .input-form li{
     margin: 5px 0px;
 }
