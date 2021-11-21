@@ -18,6 +18,10 @@ module.exports = app => {
     timestamps: false, //自动增加创建时间 
     tableName: 'admin' //设置表名称
   });
-
+  Admin.associate = function (){
+    // 1对1关联
+    app.model.Admin.belongsTo(app.model.Role, {foreignKey: 'roleId'});
+  }
+  
   return Admin;
 };

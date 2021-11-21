@@ -8,18 +8,23 @@
             <div class="table-responsive input-form">
                 <form action="<%=adminPath%>/manager/doEdit" method="post">
                     <input type="hidden" name="_csrf" value="<%=csrf%>">
-                    <input type="hidden" name="id" value="<%=list.id%>">
+                    <input type="hidden" name="id" value="<%=manager.id%>">
                     <ul>
-                        <li> 管理员名称: <input type="text" name="username" value="<%=list.username%>" /></li>
-                        <li> 管理员密码: <input type="password" name="password" value="<%=list.password%>" /></li>
-                        <li> 管理员电话: <input type="text" name="mobile" value="<%=list.mobile%>" /></li>
-                        <li> 管理员邮箱: <input type="text" name="email" value="<%=list.email%>" /></li>
+                        <li> 管理员名称: <input type="text" name="username" value="<%=manager.username%>" readonly/></li>
+                        <li> 管理员密码: <input type="password" name="password"  /></li>
+                        <li> 管理员电话: <input type="text" name="mobile" value="<%=manager.mobile%>" /></li>
+                        <li> 管理员邮箱: <input type="text" name="email" value="<%=manager.email%>" /></li>
 
                         <li>
                             管理员角色:
                             <select name="roleId" id="roleId">
-                                <%for(var i = 0;i<rolesInfo.length; i++){%>
-                                    <option value="<%=rolesInfo[i].id%>"><%=rolesInfo[i].rolename%></option>
+                                <%for(var i = 0;i<roleList.length; i++){%>
+                                    <%if(manager.roleId==roleList[i].id){%>
+                                        <option selected value="<%=roleList[i].id%>"><%=roleList[i].rolename%></option>
+                                    <%}else{%>
+                                        <option value="<%=roleList[i].id%>"><%=roleList[i].rolename%></option>
+                                    <%}%>
+                                    
                                 <%}%>
                             </select>
                         </li>

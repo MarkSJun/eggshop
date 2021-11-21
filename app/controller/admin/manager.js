@@ -4,96 +4,154 @@ const BaseController = require('./base.js');
 
 class ManagerController extends BaseController {
   async index() {
-    const {ctx} = this;
-    const res = await ctx.model.Admin.findAll();
-    
-    await ctx.render("admin/manager/index", {list: res});
+    const {
+      ctx
+    } = this;
+    let result = await ctx.model.Admin.findAll({
+      include: {
+        model: ctx.model.Role
+      }
+    });
+
+    await ctx.render("admin/manager/index", {
+      list: result
+    });
   }
   async edit() {
     try {
-      const {ctx} = this;
+      const {
+        ctx
+      } = this;
       let id = ctx.request.query.id;
+      // 获取当前编辑的用户信息
       let res = await ctx.model.Admin.findAll({
         where: {
           id: id
         }
       })
       let itemData = res[0];
-      await ctx.render(`${this.config.adminPath}/manager/edit`, {list:itemData});
-    } catch(error) {
-      await this.error("非法请求",`${this.config.adminPath}/manager`);
+      // 获取所有角色信息
+      let roleList = await ctx.model.Role.findAll();
+
+      await ctx.render(`${this.config.adminPath}/manager/edit`, {
+        manager: itemData,
+        roleList: roleList
+      });
+    } catch (error) {
+      console.log(error);
+      await this.error("非法请求", `${this.config.adminPath}/manager`);
     }
   }
   async doEdit() {
-    const {ctx} = this;
-    let id = ctx.request.body.id;
-    console.log('id:::::',id);
-    let manager = await ctx.model.Admin.findByPk(id);
+    const {
+      ctx
+    } = this;
+    let editRes = ctx.request.body;
+    let manager = await ctx.model.Admin.findByPk(editRes.id);
 
-    if(!manager) {
-      await this.error("非法请求",`${this.config.adminPath}/manager/edit?id=${id}`);
+    if (!manager) {
+      await this.error("非法请求", `${this.config.adminPath}/manager/edit?id=${editRes.id}`);
       return;
-    } 
+    }
+    // 判断密码是否为空
+    if (editRes.password != '') {
+      if (editRes.password.length < 6) {
+        await this.error("密码长度不能小于6位", `${this.config.adminPath}/manager/edit?id=${editRes.id}`);
+        return;
+      }
+      editRes.password = ctx.service.tools.md5(editRes.password);
+    } else {
+      delete editRes.password;
+    }
     await manager.update(this.ctx.request.body);
-    await this.success("修改数据成功",`${this.config.adminPath}/manager`);
-  
+    await this.success("修改数据成功", `${this.config.adminPath}/manager`);
+
   }
   async add() {
-    const {ctx} = this;
+    const {
+      ctx
+    } = this;
     // 获取所有角色信息
-    const rolesInfo = await ctx.model.Role.findAll();
+    const roleList = await ctx.model.Role.findAll();
 
-    await ctx.render("admin/manager/add", {rolesInfo: rolesInfo});
+    await ctx.render("admin/manager/add", {
+      roleList: roleList
+    });
   }
   async doAdd() {
-    const {ctx} = this;
+    const {
+      ctx
+    } = this;
     const username = ctx.request.body.username;
     let psd = ctx.request.body.password;
-    
+
     const email = ctx.request.body.email;
     const phone = ctx.request.body.mobile;
-    if(username == '') {
+    // 判断用户名是否为空
+    if (username == '') {
       await this.error("管理员名称不能为空", `${this.config.adminPath}/manager/add`);
       return;
     }
-    if(psd == '') {
-      await this.error("管理员密码不能为空", `${this.config.adminPath}/manager/add`);
+
+    if (psd.length < 6) {
+      await this.error("管理员密码不能低于6位字符", `${this.config.adminPath}/manager/add`);
       return;
     } else {
       psd = ctx.service.tools.md5(psd);
     }
-    if(email == '') {
-      await this.error("管理员邮箱不能为空", `${this.config.adminPath}/manager/add`);
+
+    // 判断用户名是否已经存在
+    let adminRes = await ctx.model.Admin.findAll({
+      where: {
+        username: username
+      }
+    })
+    if (adminRes.length > 0) {
+      await this.error("此管理员名称已经存在，请更换用户名", `${this.config.adminPath}/manager/add`);
       return;
+    } else {
+      if (email == '') {
+        await this.error("管理员邮箱不能为空", `${this.config.adminPath}/manager/add`);
+        return;
+      }
+      if (phone == '') {
+        await this.error("管理员电话不能为空", `${this.config.adminPath}/manager/add`);
+        return;
+      } else {
+        if (phone.length > 11) {
+          await this.error("管理员电话不能超过11位", `${this.config.adminPath}/manager/add`);
+          return;
+        }
+      }
     }
-    if(phone == '') {
-      await this.error("管理员电话不能为空", `${this.config.adminPath}/manager/add`);
-      return;
-    }
+
+
     await ctx.model.Admin.create(Object.assign(ctx.request.body, {
       password: psd,
       status: 1,
-      isSuper: 1,
+      isSuper: 0,
       addTime: ctx.service.tools.getUnixTime(),
       lastLogin: ctx.service.tools.getUnixTime()
     }))
 
-    await this.success("新增角色成功", `${this.config.adminPath}/manager`)
-    
+    await this.success("新增管理员成功", `${this.config.adminPath}/manager`)
+
   }
   async delete() {
     try {
-      const {ctx} = this;
+      const {
+        ctx
+      } = this;
       let id = ctx.request.query.id;
       let manager = await ctx.model.Admin.findByPk(id);
       if (!manager) {
-        await this.error("非法请求",`${this.config.adminPath}/manager`);
+        await this.error("非法请求", `${this.config.adminPath}/manager`);
         return;
       }
       await manager.destroy();
-      await this.success("删除数据成功",`${this.config.adminPath}/manager`);
-    } catch(err) {
-      await this.error("非法请求",`${this.config.adminPath}/manager`);
+      await this.success("删除数据成功", `${this.config.adminPath}/manager`);
+    } catch (err) {
+      await this.error("非法请求", `${this.config.adminPath}/manager`);
     }
   }
 }
