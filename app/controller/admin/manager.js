@@ -13,8 +13,14 @@ class ManagerController extends BaseController {
       }
     });
 
+    let newres = result.map(item => {
+      item.addTime = ctx.service.tools.dateFormat(item.addTime*1000, 'Y年m月d日 H时i分');
+      item.lastLogin = ctx.service.tools.dateFormat(item.lastLogin*1000, 'Y年m月d日 H时i分');
+      return item;
+    })
+
     await ctx.render("admin/manager/index", {
-      list: result
+      list: newres
     });
   }
   async edit() {

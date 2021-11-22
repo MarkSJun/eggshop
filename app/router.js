@@ -7,6 +7,15 @@ module.exports = app => {
   const { router, controller, config } = app;
   router.get('/', controller.default.home.index);
 
+  router.get(`${config.adminPath}`, controller.admin.main.index);
+
+  router.get(`${config.adminPath}/welcome`, controller.admin.main.welcome);
+
+  router.get(`${config.adminPath}/login`, controller.admin.login.index);
+  router.get(`${config.adminPath}/login/loginOut`, controller.admin.login.loginOut);
+  router.get(`${config.adminPath}/login/captcha`, controller.admin.login.captcha);
+  router.post(`${config.adminPath}/doLogin`, controller.admin.login.doLogin);
+
   router.get(`${config.adminPath}/manager`, controller.admin.manager.index);
   router.get(`${config.adminPath}/manager/add`, controller.admin.manager.add);
   router.post(`${config.adminPath}/manager/doAdd`, controller.admin.manager.doAdd);
@@ -23,14 +32,12 @@ module.exports = app => {
 
   router.get(`${config.adminPath}/access`, controller.admin.access.index);
   router.get(`${config.adminPath}/access/add`, controller.admin.access.add);
+  router.post(`${config.adminPath}/access/doAdd`, controller.admin.access.doAdd);
   router.get(`${config.adminPath}/access/edit`, controller.admin.access.edit);
+  router.post(`${config.adminPath}/access/doEdit`, controller.admin.access.doEdit);
   router.get(`${config.adminPath}/access/delete`, controller.admin.access.delete);
 
 
-  router.get(`${config.adminPath}/login`, controller.admin.login.index);
-  router.get(`${config.adminPath}/login/loginOut`, controller.admin.login.loginOut);
-  router.get(`${config.adminPath}/login/captcha`, controller.admin.login.captcha);
-  router.post(`${config.adminPath}/doLogin`, controller.admin.login.doLogin);
-  router.get(`${config.adminPath}`, controller.admin.main.index);
-  router.get(`${config.adminPath}/welcome`, controller.admin.main.welcome);
+  
+ 
 };

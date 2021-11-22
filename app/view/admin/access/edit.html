@@ -2,13 +2,14 @@
 
 <div class="panel panel-default">              
     <div class="panel-heading">
-      增加权限
+      编辑权限
     </div>
     <div class="panel-body">
         <div class="table-responsive input-form">
                 <form action="<%=adminPath%>/access/doAdd" method="post">
                     <ul>
                         <input type="hidden" name="_csrf" value="<%=csrf%>">
+                        <input type="hidden" name="id" value="<%=accessList.id%>">
                         <li>模块名称: <input type="text" name="moduleName"/></li>
                         <li>
                             

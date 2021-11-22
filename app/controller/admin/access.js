@@ -1,22 +1,65 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const BaseController = require('./base.js');
 
-class AccessController extends Controller {
+class AccessController extends BaseController {
     async index() {
         const { ctx } = this;
+        let resList = await ctx.model.Access.findAll({
+          where: {
+            moduleId: 0
+          },
+          include: { model: ctx.model.Access }
+        });
+        // ctx.body = resList;
         await ctx.render('admin/access/index', {
-            msg: '权限列表',
+            list: resList,
         });
       }
       async edit() {
-        this.ctx.body = '编辑权限列表';
+        const {ctx} = this;
+        let id = ctx.request.query.id;
+        let res = await ctx.model.Access.findAll({
+          where: {
+            id: id
+          }
+        })
+        // ctx.body = res;
+        ctx.render('admin/access/edit', {
+          accessList: res
+        })
+      }
+      async doEdit() {
+        const { ctx } = this;
+        ctx.body = '123'
       }
       async add() {
         const { ctx } = this;
+        //获取moduleId=0的模块
+        let accessList=await ctx.model.Access.findAll({
+          where:{
+              moduleId:0
+          }
+        })
+        // ctx.body = accessList;
         await ctx.render('admin/access/add', {
-            msg: '增加权限',
+          accessList: accessList
         });
+      }
+      async doAdd() {
+        const {ctx} = this;
+        let addResult=ctx.request.body;
+        if(addResult.moduleName==""){
+            await this.error("模块名称不能为空",`${this.config.adminPath}/access/add`);
+            return;
+        }
+        await ctx.model.Access.create({
+            ...addResult,
+            status: 1,
+            addTime: ctx.service.tools.getUnixTime()
+        })
+
+        await this.success("增加权限成功",`${this.config.adminPath}/access`);
       }
       async delete() {
         this.ctx.body = '删除权限';

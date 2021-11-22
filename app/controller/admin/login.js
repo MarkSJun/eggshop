@@ -9,8 +9,6 @@ class LoginController extends BaseController {
   }
   async doLogin() {
     const { ctx } = this;
-    // console.log('用户登录信息：', ctx.request.body);
-    
     let username=ctx.request.body.username;
     let password=ctx.service.tools.md5(ctx.request.body.password);
     let verify=ctx.request.body.verify.toLowerCase();
@@ -28,7 +26,18 @@ class LoginController extends BaseController {
       if(userinfo.length>0){
         ctx.session.userinfo=userinfo[0];
         // ctx.redirect(`${this.config.adminPath}`)
-        await this.success("登录成功", `${this.config.adminPath}`)
+        await this.success("登录成功", `${this.config.adminPath}`);
+        // 更新当前登录用户最后一次登录的时间
+        let curLoginUser = await ctx.model.Admin.findAll({
+          where: {
+            username: username
+          }
+        })
+        // 更新当前登录用户最后一次登录时间
+        await curLoginUser[0].update(Object.assign(curLoginUser, {
+          lastLogin: ctx.service.tools.getUnixTime()
+        }))
+        // console.log('当前登录用户的用户信息',curLoginUser);
       }else{
         // console.log("用户名或者密码错误");
         // this.ctx.redirect("/admin/login");
