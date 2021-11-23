@@ -24,9 +24,15 @@ class AccessController extends BaseController {
             id: id
           }
         })
+        let accessList=await ctx.model.Access.findAll({
+          where:{
+              moduleId:0
+          }
+        })
         // ctx.body = res;
-        ctx.render('admin/access/edit', {
-          accessList: res
+        await ctx.render('admin/access/edit', {
+          access: res[0],
+          accessList: accessList
         })
       }
       async doEdit() {
