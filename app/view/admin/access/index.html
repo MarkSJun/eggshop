@@ -25,8 +25,8 @@
                 <tr class="th">
                     <th>模块名称</th>
                     <th>节点类型</th>
-                    <th>操作名称</th>     
-                    <th>操作地址</th>                        
+                    <th>操作名称</th>
+                    <th>操作地址</th>
                     <th>排序</th>
                     <th>描述</th>
                     <th class="text-center">操作</th>
@@ -35,55 +35,75 @@
             <tbody>
                 <%for(var i=0;i<list.length;i++){%>
                     <tr>
-                        <td style="width: 200px;"><%=list[i].moduleName%></td>
-                        <td style="width: 100px;" class="text-center">     
-                                <%if(list[i].type==1){%>
-                                    模块
+                        <td style="width: 200px;">
+                            <%=list[i].moduleName%>
+                        </td>
+                        <td style="width: 100px;" class="text-center">
+                            <%if(list[i].type==1){%>
+                                模块
                                 <%}else if(list[i].type==2){%>
                                     菜单
-                                <%}else{%>
-                                    操作
-                                <%}%>
+                                    <%}else{%>
+                                        操作
+                                        <%}%>
                         </td>
-                        <td class="text-center"><%=list[i].actionName%></td>
+                        <td class="text-center">
+                            <%=list[i].actionName%>
+                        </td>
 
-                        <td style="width: 250px;"><%=list[i].url%></td>
-                        <td style="width: 100px;" class="text-center"><%=list[i].sort%></td>
+                        <td style="width: 250px;">
+                            <%=list[i].url%>
+                        </td>
+                        <td style="width: 100px;" class="text-center">
+                            <%=list[i].sort%>
+                        </td>
 
-                        <td><%=list[i].description%></td>
-                    
-                        <td style="width: 250px;" class="text-center"><a href="<%=adminPath%>/access/edit?id=<%=list[i].id%>">修改</a></td>
+                        <td>
+                            <%=list[i].description%>
+                        </td>
+
+                        <td style="width: 250px;" class="text-center"><a
+                                href="<%=adminPath%>/access/edit?id=<%=list[i].id%>">修改</a></td>
                     </tr>
 
                     <%for(var j=0;j<list[i].accesses.length;j++){%>
                         <tr>
-                            <td>---<%=list[i].accesses[j].moduleName%></td>
-                            <td class="text-center">     
-                                    <%if(list[i].accesses[j].type==1){%>
-                                        模块
+                            <td>---<%=list[i].accesses[j].moduleName%>
+                            </td>
+                            <td class="text-center">
+                                <%if(list[i].accesses[j].type==1){%>
+                                    模块
                                     <%}else if(list[i].accesses[j].type==2){%>
                                         菜单
-                                    <%}else{%>
-                                        操作
-                                    <%}%>
+                                        <%}else{%>
+                                            操作
+                                            <%}%>
                             </td>
-                            <td style="width: 150px;" class="text-center"><%=list[i].accesses[j].actionName%></td>
-    
-                            <td style="width: 250px;"><%=list[i].accesses[j].url%></td>
-                            <td style="width: 100px;" class="text-center"><%=list[i].accesses[j].sort%></td>
-    
-                            <td><%=list[i].accesses[j].description%></td>
-                        
+                            <td style="width: 150px;" class="text-center">
+                                <%=list[i].accesses[j].actionName%>
+                            </td>
+
+                            <td style="width: 250px;">
+                                <%=list[i].accesses[j].url%>
+                            </td>
+                            <td style="width: 100px;" class="text-center">
+                                <%=list[i].accesses[j].sort%>
+                            </td>
+
+                            <td>
+                                <%=list[i].accesses[j].description%>
+                            </td>
+
                             <td style="width: 250px;" class="text-center">
                                 <a href="<%=adminPath%>/access/edit?id=<%=list[i].accesses[j].id%>">修改</a>
                                 <a href="<%=adminPath%>/access/delete?id=<%=list[i].accesses[j].id%>">删除</a>
                             </td>
                         </tr>
-    
-                    <%}%>
 
-                <%}%>
-               
+                        <%}%>
+
+                            <%}%>
+
 
             </tbody>
         </table>

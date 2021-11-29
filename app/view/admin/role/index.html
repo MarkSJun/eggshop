@@ -31,19 +31,26 @@
                 </tr>
             </thead>
             <tbody>
-                <%for(var i = 0;i<list.length; i++){%>
-                <tr>
-                    <td><%=list[i].rolename%></td>
-                    <td><%=list[i].description%></td>
-                    <td class="text-center"><%=list[i].addTime%></td>
+                <%for(var i=0;i<list.length; i++){%>
+                    <tr>
+                        <td>
+                            <%=list[i].rolename%>
+                        </td>
+                        <td>
+                            <%=list[i].description%>
+                        </td>
+                        <td class="text-center">
+                            <%=list[i].addTime%>
+                        </td>
 
-                    <td class="text-center">
-                       <a href="<%=adminPath%>/role/edit?id=<%=list[i].id%>">修改</a>  
-                       <a href="<%=adminPath%>/role/delete?id=<%=list[i].id%>">删除</a> 
-                    </td>
-                </tr>
-                <%}%>
-               
+                        <td class="text-center">
+                            <a href="<%=adminPath%>/role/auth?id=<%=list[i].id%>">授权</a>　
+                            <a href="<%=adminPath%>/role/edit?id=<%=list[i].id%>">修改</a>　
+                            <a href="<%=adminPath%>/role/delete?id=<%=list[i].id%>">删除</a>
+                        </td>
+                    </tr>
+                    <%}%>
+
 
             </tbody>
         </table>

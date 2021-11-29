@@ -16,9 +16,9 @@
                             节点类型:
                             <!-- 1、表示模块   2、表示菜单     3、操作 -->
                             <select name="type" id="type">
-                                <option value="1">模块</option>
-                                <option value="2">菜单</option>
-                                <option value="3">操作</option>
+                                <option value="1" <%if(access.type==1){%> selected <%}%>>模块</option>
+                                <option value="2" <%if(access.type==2){%> selected <%}%>>菜单</option>
+                                <option value="3" <%if(access.type==3){%> selected <%}%>>操作</option>
                             </select>
 
                         </li>
@@ -28,10 +28,16 @@
                             <select name="moduleId" id="moduleId">
                                 <option value="0">---顶级模块--</option>
                                 <%for(var i=0;i<accessList.length;i++){%>
+                                    <%if(access.moduleId==accessList[i].id){%>
+                                        <option value="<%=accessList[i].id%>" selected>
+                                            <%=accessList[i].moduleName%>
+                                        </option>
+                                    <%}else{%>
                                     <option value="<%=accessList[i].id%>">
                                         <%=accessList[i].moduleName%>
                                     </option>
                                     <%}%>
+                                <%}%>
                             </select>
                         </li>
                         <li> 排　　序: <input type="text" name="sort" value="<%=access.sort%>" /></li>
