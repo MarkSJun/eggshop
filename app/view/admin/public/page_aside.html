@@ -1,32 +1,37 @@
 <ul class="aside">
          		
-    <li>
-        <h4>管理员管理</h4>
-        
-        <ul>
-            <li  class="list-group-item"> <a href="<%=adminPath%>/manager" target="rightMain">管理员列表</a></li>
-            
-            <li class="list-group-item"> <a href="<%=adminPath%>/manager/add" target="rightMain">增加管理员</a></li>
-        </ul>
-    </li>
-    <li>
-        <h4>角色管理</h4>
-        
-        <ul>
-            <li  class="list-group-item"> <a href="<%=adminPath%>/role" target="rightMain">角色列表</a></li>
-            
-            <li class="list-group-item"> <a href="<%=adminPath%>/role/add" target="rightMain">增加角色</a></li>
-        </ul>
-    </li>
-    <li>
-        <h4>权限管理</h4>
-        
-        <ul>
-            <li  class="list-group-item"> <a href="<%=adminPath%>/access/" target="rightMain">权限列表</a></li>
-            
-            <li class="list-group-item"> <a href="<%=adminPath%>/access/add" target="rightMain">增加权限</a></li>
-        </ul>
-    </li>
+    <%if(isSuper==1){%>
+        <%for(var i=0;i<authList.length;i++){%>
+            <li>
+                <h4><%=authList[i].moduleName%></h4>
+                
+                <ul>
+                    <%for(var j=0;j<authList[i].accesses.length;j++){%>
+                        <%if(authList[i].accesses[j].type==2){%>                
+                            <li  class="list-group-item"> <a href="<%=adminPath%>/<%=authList[i].accesses[j].url%>" target="rightMain"><%=authList[i].accesses[j].actionName%></a></li>
+                        <%}%>
+                    <%}%>
+                </ul>
+            </li>
+        <%}%>
+    <%}else{%>
+        <%for(var i=0;i<authList.length;i++){%>
+
+            <%if(authList[i].checked==true){%>  
+                <li>
+                    <h4><%=authList[i].moduleName%></h4>
+                    
+                    <ul>
+                        <%for(var j=0;j<authList[i].accesses.length;j++){%>
+                            <%if(authList[i].accesses[j].type==2 && authList[i].accesses[j].checked==true){%>                
+                                <li  class="list-group-item"> <a href="<%=adminPath%>/<%=authList[i].accesses[j].url%>" target="rightMain"><%=authList[i].accesses[j].actionName%></a></li>
+                            <%}%>
+                        <%}%>
+                    </ul>
+                </li>
+            <%}%>
+        <%}%>
+    <%}%>
     
     
 </ul>
