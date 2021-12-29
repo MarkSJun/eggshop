@@ -37,7 +37,8 @@ module.exports = appInfo => {
     match: config.adminPath,
     adminPath: config.adminPath
   }
-
+ //配置排除的地址
+ config.ignoreUrl = [`${config.adminPath}`, `${config.adminPath}/welcome`, `${config.adminPath}/login/loginOut`];
   // add your user config here
   const userConfig = {
     view: {

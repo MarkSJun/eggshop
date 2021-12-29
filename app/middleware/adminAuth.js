@@ -7,7 +7,14 @@ module.exports = option => {
         ctx.state.adminPath=option.adminPath  // 获取配置文件里的后台地址
         console.log('option: ', option);
         if (ctx.session.userinfo && ctx.session.userinfo.username) {
-            await next();
+            var hasAuth=await ctx.service.admin.checkAuth();
+            if(hasAuth){
+                ctx.state.userinfo=ctx.session.userinfo;
+                await next();
+            }else{
+                ctx.body="您没有权限访问这个地址";
+            }
+        
         } else {
             if (pathname == `${option.adminPath}/login` || pathname == `${option.adminPath}/doLogin` || pathname == `${option.adminPath}/login/captcha`) {
                 await next();

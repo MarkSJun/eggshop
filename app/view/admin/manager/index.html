@@ -48,7 +48,7 @@
                         <td class="text-center"><%=list[i].lastLogin%></td>
                         <td class="text-center">
                             <a href="<%=adminPath%>/manager/edit?id=<%=list[i].id%>">修改</a>  
-                            <a href="<%=adminPath%>/manager/delete?id=<%=list[i].id%>">删除</a> 
+                            <a class="delete" href="<%=adminPath%>/manager/delete?id=<%=list[i].id%>">删除</a> 
                         </td>
                     </tr>
                 <%}%>
