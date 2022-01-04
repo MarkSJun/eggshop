@@ -7,6 +7,7 @@ import ExportAdminBase = require('../../../app/controller/admin/base');
 import ExportAdminLogin = require('../../../app/controller/admin/login');
 import ExportAdminMain = require('../../../app/controller/admin/main');
 import ExportAdminManager = require('../../../app/controller/admin/manager');
+import ExportAdminProductCate = require('../../../app/controller/admin/productCate');
 import ExportAdminRole = require('../../../app/controller/admin/role');
 import ExportDefaultHome = require('../../../app/controller/default/home');
 
@@ -18,6 +19,7 @@ declare module 'egg' {
       login: ExportAdminLogin;
       main: ExportAdminMain;
       manager: ExportAdminManager;
+      productCate: ExportAdminProductCate;
       role: ExportAdminRole;
     }
     default: {

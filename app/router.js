@@ -39,7 +39,12 @@ module.exports = app => {
   router.post(`${config.adminPath}/access/doEdit`, controller.admin.access.doEdit);
   router.get(`${config.adminPath}/access/delete`, controller.admin.access.delete);
 
-
+  router.get(`${config.adminPath}/productCate`, controller.admin.productCate.index);
+  router.get(`${config.adminPath}/productCate/add`, controller.admin.productCate.add);
+  router.get(`${config.adminPath}/productCate/edit`, controller.admin.productCate.edit);
+  router.get(`${config.adminPath}/productCate/delete`, controller.admin.productCate.delete);
+  router.post(`${config.adminPath}/productCate/doAdd`, controller.admin.productCate.doAdd);
+  router.post(`${config.adminPath}/productCate/doEdit`, controller.admin.productCate.doEdit);
   
  
 };

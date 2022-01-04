@@ -1,0 +1,59 @@
+<% include ../public/page_header.html %>
+   
+    <!--
+        列表展示
+    -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="<%=adminPath%>/productCate/add" class="btn btn-primary">增加分类</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="th">
+                        <th>分类名称</th>
+                        <th>分类描述</th>
+                        <th>增加时间</th>   
+                        <th class="text-center">排序</th>       
+                        <th class="text-center">状态</th>                   
+
+                        <th class="text-center">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%for(var i=0;i<list.length;i++){%>
+                    <tr>
+                        
+                        <td><%=list[i].title%></td>
+                        <td><%=list[i].description%></td>
+                        <td><%=helper.formatTime(list[i].addTime)%></td>
+                        <td class="text-center"><%=list[i].sort%></td>
+                        <td class="text-center">
+
+                            <%if(list[i].status==1){%>
+        
+                                <img src="/public/admin/images/yes.gif"  />
+
+                            <%}else{%>
+                                    <img src="/public/admin/images/no.gif" />
+                            <%}%>
+                        </td>
+
+                        <td class="text-center">
+                            
+                            <a href="<%=adminPath%>/productCate/edit?id=<%=list[i].id%>">编辑</a>　
+
+                            <a class="delete" href="<%=adminPath%>/productCate/delete?id=<%=list[i].id%>">删除</a>
+                        </td>
+                    </tr>
+                    <%}%>
+                
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    </body>
+
+    </html>
