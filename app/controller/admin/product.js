@@ -55,7 +55,8 @@ class ProductController extends Controller {
                 //获取文件名称
                 const filename = file.filename;
                 //定义保存文件的目录
-                const targetPath = path.join('app/public/upload', filename);
+                // const targetPath = path.join('app/public/upload', filename);
+                const targetPath = await this.ctx.service.tools.getUploadFile(filename);
                 //读取文件
                 const source = fs.createReadStream(file.filepath);
                 //创建写入流

@@ -30,7 +30,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1576384476895_3620';
   // 配置后台地址
   config.adminPath = '/admin'
-  
+
   //配置文件上传的模式
   config.multipart = {
   mode: 'file',
@@ -52,7 +52,8 @@ module.exports = appInfo => {
       },
     }
   };
-
+  
+  config.uploadDir="app/public/upload";
   //配置数据库    
   config.sequelize = {
     dialect: 'mysql',
@@ -66,4 +67,5 @@ module.exports = appInfo => {
     ...config,
     ...userConfig,
   };
+  
 };

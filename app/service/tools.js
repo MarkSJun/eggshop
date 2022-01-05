@@ -3,6 +3,9 @@
 const Service = require('egg').Service;
 const svgCaptcha = require('svg-captcha');
 const md5 = require('md5');
+const sd = require('silly-datetime');
+const path = require('path');
+const mkdirp = require('mz-modules/mkdirp');
 class ToolsService extends Service {
   async getCaptcha() {
     //生成图形验证码
@@ -65,6 +68,26 @@ class ToolsService extends Service {
       })[matches];
     });
   };
+  async getUploadFile(filename){
+
+    //1、获取当前日期 20210920
+    let day=sd.format(new Date(), 'YYYYMMDD');
+
+    //2、创建文件保存的路径
+    // app/public/upload/20210920
+    let dir=path.join(this.config.uploadDir,day);    
+    await mkdirp(dir);
+
+    //3、生成文件名称  获取文件保存的目录   以前的文件 serverless_600x900.png    20210920.png
+    let d=this.getUnixTime();
+
+    //  app/public/upload/20210920/4124215212.png
+    let saveDir=path.join(dir,d+path.extname(filename));
+
+    console.log(saveDir);
+
+    return saveDir;
+  }
 }
 
 module.exports = ToolsService;
