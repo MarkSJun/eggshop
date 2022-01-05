@@ -30,6 +30,11 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1576384476895_3620';
   // 配置后台地址
   config.adminPath = '/admin'
+  
+  //配置文件上传的模式
+  config.multipart = {
+  mode: 'file',
+  };
 
   // add your middleware config here
   config.middleware = ['adminAuth'];

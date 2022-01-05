@@ -12,6 +12,8 @@
     "egg-view-ejs": "^2.0.1",
     "md5": "^2.3.0",
     "mysql2": "^2.2.5",
+    "mz": "^2.7.0",
+    "mz-modules": "^2.1.0",
     "silly-datetime": "^0.1.2",
     "svg-captcha": "^1.4.0"
   },
