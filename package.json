@@ -7,6 +7,7 @@
     "declarations": true
   },
   "dependencies": {
+    "cos-nodejs-sdk-v5": "^2.11.6",
     "egg": "^2.15.1",
     "egg-sequelize": "^6.0.0",
     "egg-view-ejs": "^2.0.1",

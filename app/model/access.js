@@ -19,7 +19,6 @@ module.exports = app => {
     tableName: 'access' //设置表名称
   });
   Access.associate = function (){ // 1对多
- 
     app.model.Access.hasMany(app.model.Access, {foreignKey: 'moduleId'});
   }
   

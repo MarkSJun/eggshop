@@ -27,7 +27,7 @@ module.exports = appInfo => {
   };
 
   // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1576384476895_3620';
+  config.keys = appInfo.name + '_1576384476895_36201';
   // 配置后台地址
   config.adminPath = '/admin'
 
@@ -54,15 +54,17 @@ module.exports = appInfo => {
   };
   
   config.uploadDir="app/public/upload";
-  //配置数据库    
-  config.sequelize = {
-    dialect: 'mysql',
-    host: '127.0.0.1',
-    port: 3306,
-    username: "root",
-    password: "root",
-    database: 'eggshop',
-  };
+  //配置本地数据库    
+  // config.sequelize = {
+  //   dialect: 'mysql',
+  //   host: '127.0.0.1',
+  //   port: 3306,
+  //   username: "root",
+  //   password: "root",
+  //   database: 'eggshop',
+  // };
+  // 配置远程数据库
+  
   return {
     ...config,
     ...userConfig,

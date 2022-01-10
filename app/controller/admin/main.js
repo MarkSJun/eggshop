@@ -16,7 +16,7 @@ class MainController extends Controller {
       },
       include: { model: this.ctx.model.Access }
     });
-
+    console.log('allAuthResult=>=======', allAuthResult);
     // 3、查询当前角色拥有的权限（查询当前角色的权限id） 把查找到的数据放在数组中
     let tempArr = [];
     let roleAuthResult = await this.ctx.model.RoleAccess.findAll({
@@ -42,7 +42,8 @@ class MainController extends Controller {
         }
       }
     }
-
+    
+    console.log(isSuper);
     // this.ctx.body=allAuthResult;
     await this.ctx.render("admin/main/index",{
       authList: allAuthResult,

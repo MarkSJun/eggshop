@@ -6,6 +6,7 @@ const md5 = require('md5');
 const sd = require('silly-datetime');
 const path = require('path');
 const mkdirp = require('mz-modules/mkdirp');
+const COS = require('cos-nodejs-sdk-v5');
 class ToolsService extends Service {
   async getCaptcha() {
     //生成图形验证码
@@ -24,7 +25,7 @@ class ToolsService extends Service {
   };
   getUnixTime() {
     let dateObj = new Date();
-    return dateObj.getTime() / 1000;
+    return Math.ceil(dateObj.getTime() / 1000);
   }
   /*
    ** 时间戳转换成指定格式日期
@@ -68,7 +69,7 @@ class ToolsService extends Service {
       })[matches];
     });
   };
-  async getUploadFile(filename){
+  async getUploadFile(filename) {
 
     //1、获取当前日期 20210920
     let day=sd.format(new Date(), 'YYYYMMDD');
@@ -84,10 +85,45 @@ class ToolsService extends Service {
     //  app/public/upload/20210920/4124215212.png
     let saveDir=path.join(dir,d+path.extname(filename));
 
-    console.log(saveDir);
-
     return saveDir;
   }
+
+  getCosUploadFile(filename) {
+    //1、获取当前日期 20210920
+    let dir = sd.format(new Date(), 'YYYYMMDD');
+    //2、生成文件名称  获取文件保存的目录   以前的文件 serverless_600x900.png    20210920.png
+    let d = this.getUnixTime();
+    let saveDir = dir+"/"+d + path.extname(filename);
+    return saveDir;
+  }
+
+  async uploadCos(filename, body) {
+    let cos = new COS({
+      SecretId: 'AKIDSjpvvOqnhWAfInlgnrjS2S6e6QfluT6Y',
+      SecretKey: '164980lNqJsNxSn14w6KQLNGzc6UkrnL'
+    });
+
+    return new Promise((reslove, reject)=>{
+      cos.putObject({
+        Bucket: 'eggshop-images-1252052821', /* 必须 */
+        Region: 'ap-shanghai',    /* 必须 */
+        Key: filename,              /* 必须 */
+        StorageClass: 'STANDARD',
+        Body: body, // 上传文件对象
+        onProgress: function (progressData) {
+          console.log(JSON.stringify(progressData));
+        }
+      }, function (err, data) {
+        if(!err){
+          reslove(data)
+        }else{
+          reject(err);
+        }       
+      });
+    })
+
+  }
+  
 }
 
 module.exports = ToolsService;

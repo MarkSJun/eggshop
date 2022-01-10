@@ -29,6 +29,7 @@ inputs:
   runtime: Nodejs10.15 # 运行环境。[Nodejs10.15, Nodejs12.16]
   role: SCF_QcsRole # 角色权限
   apigatewayConf: # API 网关
+    isBase64Encoded: true
     protocols:
       - http
       - https

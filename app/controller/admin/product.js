@@ -16,63 +16,53 @@ class ProductController extends Controller {
     }
 
     //单文件上传
-    // async doAdd() {
-
-    //     const { ctx } = this;
-    //     const body = ctx.request.body;
-    //     //文件信息
-    //     const file = ctx.request.files[0];
-    //     if(file){
-    //         //获取文件名称
-    //         const filename = file.filename;
-    //         //定义保存文件的目录
-    //         const targetPath = path.join('app/public/upload', filename);
-    //         //读取文件
-    //         const source = fs.createReadStream(file.filepath);
-    //         //创建写入流
-    //         const target = fs.createWriteStream(targetPath);
-    //         try {
-    //             await pump(source, target);
-    //         } finally {
-    //             // delete those request tmp files
-    //             await ctx.cleanupRequestFiles();
-    //         }
-    //     }
-    //     ctx.body = {
-    //         body: body,
-    //         file: file
-    //     }
-    // }
-    //多文件上传
     async doAdd() {
         const { ctx } = this;
         const body = ctx.request.body;
         //文件信息
-        const files = ctx.request.files;
-
-        try {
-            for (let file of files) {
-                //获取文件名称
-                const filename = file.filename;
-                //定义保存文件的目录
-                // const targetPath = path.join('app/public/upload', filename);
-                const targetPath = await this.ctx.service.tools.getUploadFile(filename);
-                //读取文件
-                const source = fs.createReadStream(file.filepath);
-                //创建写入流
-                const target = fs.createWriteStream(targetPath);
-                await pump(source, target);
-            }
-        } finally {
-            // delete those request tmp files
-            await ctx.cleanupRequestFiles();
+        const file = ctx.request.files[0];
+        if (file) {
+            let source = fs.createReadStream(file.filepath);
+            let filename = this.ctx.service.tools.getCosUploadFile(file.filename);
+            console.log(filename);
+            //异步 改成 同步
+            await this.ctx.service.tools.uploadCos(filename, source);
         }
-
         ctx.body = {
             body: body,
-            files: files
+            file: file
         }
     }
+    //多文件上传
+    // async doAdd() {
+    //     const { ctx } = this;
+    //     const body = ctx.request.body;
+    //     //文件信息
+    //     const files = ctx.request.files;
+
+    //     try {
+    //         for (let file of files) {
+    //             //获取文件名称
+    //             const filename = file.filename;
+    //             //定义保存文件的目录
+    //             // const targetPath = path.join('app/public/upload', filename);
+    //             const targetPath = await this.ctx.service.tools.getUploadFile(filename);
+    //             //读取文件
+    //             const source = fs.createReadStream(file.filepath);
+    //             //创建写入流
+    //             const target = fs.createWriteStream(targetPath);
+    //             await pump(source, target);
+    //         }
+    //     } finally {
+    //         // delete those request tmp files
+    //         await ctx.cleanupRequestFiles();
+    //     }
+
+    //     ctx.body = {
+    //         body: body,
+    //         files: files
+    //     }
+    // }
 }
 
 module.exports = ProductController;
