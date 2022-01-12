@@ -63,15 +63,7 @@ module.exports = appInfo => {
   //   password: "root",
   //   database: 'eggshop',
   // };
-  // 配置远程数据库
-  config.sequelize = {
-    dialect: 'mysql',
-    host: 'baota.mgnav.com',
-    port: 3306,
-    username: "eggshop",
-    password: "ZDa4EKF54cBKbp6D",
-    database: 'eggshop',
-  };
+
   return {
     ...config,
     ...userConfig,
