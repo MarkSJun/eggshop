@@ -63,7 +63,6 @@ module.exports = appInfo => {
   //   password: "root",
   //   database: 'eggshop',
   // };
-  // 配置远程数据库
   
   return {
     ...config,

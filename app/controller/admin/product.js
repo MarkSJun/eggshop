@@ -9,7 +9,7 @@ const pump = require('mz-modules/pump');
 
 class ProductController extends Controller {
     async index() {
-        this.ctx.body = "菜品首页 请访问 product/add 实现图片上传1 "
+        await this.ctx.render("admin/product/index");
     }
     async add() {
         await this.ctx.render("admin/product/add")
