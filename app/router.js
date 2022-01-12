@@ -49,4 +49,5 @@ module.exports = app => {
   router.get(`${config.adminPath}/product`, controller.admin.product.index);
   router.get(`${config.adminPath}/product/add`, controller.admin.product.add);
   router.post(`${config.adminPath}/product/doAdd`, controller.admin.product.doAdd);
+  router.post(`/${config.adminPath}/product/doUpload`, controller.admin.product.doUpload);
 };

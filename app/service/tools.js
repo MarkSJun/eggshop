@@ -99,8 +99,8 @@ class ToolsService extends Service {
 
   async uploadCos(filename, body) {
     let cos = new COS({
-      SecretId: 'AKIDSjpvvOqnhWAfInlgnrjS2S6e6QfluT6Y',
-      SecretKey: '164980lNqJsNxSn14w6KQLNGzc6UkrnL'
+      SecretId: 'AKIDSj************************luT6Y',
+      SecretKey: '1649************************krnL'
     });
 
     return new Promise((reslove, reject)=>{

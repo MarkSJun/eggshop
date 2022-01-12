@@ -33,6 +33,23 @@ class ProductController extends Controller {
             file: file
         }
     }
+    
+    async doUpload() {
+        const { ctx } = this;
+        const body = ctx.request.body;
+        //文件信息
+        const file = ctx.request.files[0];
+
+        if (file) {
+            var source = fs.createReadStream(file.filepath);
+            var filename = this.ctx.service.tools.getCosUploadFile(file.filename);
+
+            //异步 改成 同步
+            await this.ctx.service.tools.uploadCos(filename, source);
+        }
+       
+        ctx.body = {link: this.config.cosUrl+"/"+filename};
+    }
     //多文件上传
     // async doAdd() {
     //     const { ctx } = this;
